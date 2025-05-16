@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<a href="{{ path('novice_data') }}">Data</a>
+<a href="{{ path('novice_index') }}">Form</a>
+
+{{ form(form) }}
+
+    {% for task in tasks %}
+        <h2><b>Naziv:</b> {{ task.Naziv }}</h2>
+        <p><b>Kategorija:</b> {{ task.Kategorija }}</p>
+        <p><b>Vsebina:</b> {{ task.Vsebina }}</p>
+        <p><b>Datum:</b> {{ task.CreatedAt|date('d.m.Y') }}</p>
+        <p><b>Izpostavljeno?</b> {{ task.Izpostavljeno ? 'Da' : 'Ne' }}</p>
+    {% endfor %}
+ 
+{% endblock %}

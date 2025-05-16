@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<a href="{{ path('novice_index') }}">Form</a>
+<a href="{{ path('novice_delete') }}">Delete data</a>
+<a href="{{ path('novice_search') }}">Search</a>
+
+{% for novice in novice %}
+    <h2>{{ novice.naziv }}</h2>
+    <p><b>Kategorija:</b> {{ novice.kategorija }}</p> 
+    <p><b>Vsebina:</b> {{ novice.vsebina }}</p>
+    <p><b>Datum objave:</b> {{ novice.datumObjave|date('d.m.Y') }}</p>
+    <p><b>Izpostavljeno?</b> {{ novice.izpostavljeno ? 'Da' : 'Ne' }}</p>
+{% endfor %}
+
+{% endblock %}
