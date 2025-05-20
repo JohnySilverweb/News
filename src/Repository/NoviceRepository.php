@@ -18,9 +18,9 @@ class NoviceRepository extends ServiceEntityRepository
 
     public function searchNews(?string $search): array {
         return $this->createQueryBuilder('t')
-        ->where('LOWER(t.Naziv) LIKE LOWER(:search)')
-        ->orWhere('LOWER(t.Kategorija) LIKE LOWER(:search)')
-        ->orWhere('LOWER(t.Vsebina) LIKE LOWER(:search)')
+        ->where('LOWER(t.name) LIKE LOWER(:search)')
+        ->orWhere('LOWER(t.category) LIKE LOWER(:search)')
+        ->orWhere('LOWER(t.content) LIKE LOWER(:search)')
         ->setParameter('search', '%' . $search . '%') 
         ->getQuery()
         ->getResult();

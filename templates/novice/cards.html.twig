@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body_class %}cards_page{% endblock %}
+
+{% block body %}
+
+<div class="title">
+    <h1>News Cards</h1><h1>Latest news</h1>
+</div>
+<div class="card_container">
+{% for novice in novice %}
+    <div class="card {{ novice.isFeatured() ? 'yes' }}">
+        {% if novice.category == 'Sport' %}
+           <img src="{{ asset('assets/img/sport.JPG') }}" alt="Sport" class="card_img">
+           {% elseif novice.category == 'Culture' %}
+           <img src="{{ asset('assets/img/culture.webp') }}" alt="Culture" class="card_img">
+           {% elseif novice.category == 'Policy' %}
+           <img src="{{ asset('assets/img/policy.jpg') }}" alt="Police" class="card_img">
+        {% endif %}
+        <div class="card_content">
+            <p class="date" >{{ novice.createdAt|date('d-m-Y') }}</p>
+            <h2>{{ novice.name }}</h2>
+            <p>{{ novice.content }}</p>
+           {#  <p class="category">{{ novice.category }}</p> #}
+        </div>
+        <div class="card_buttons">
+            <a href="{{ path('novice_data') }}" class="btn_left">See more</a>
+            <a href="{{ path('novice_edit', {'id': novice.id}) }}" class="btn_right">Edit</a>
+        </div>
+    </div>
+{% endfor %}
+    </div>
+    <hr>
+<div class="buttons">
+   <button><a href="{{ path('novice_table') }}">Tables</a></button>
+   <button><a href="{{ path('novice_index') }}">Add news</a></button>
+   <button><a href="{{ path('novice_search') }}">Search news</a></button>
+</div>
+{% endblock %}

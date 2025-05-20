@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<a href="{{ path('novice_data') }}">Data</a>
-<a href="{{ path('novice_index') }}">Form</a>
+<a href="{{ path('novice_data') }}">Data</a> |
+<a href="{{ path('novice_index') }}">Form</a> |
+<a href="{{ path('novice_table') }}">News in Table</a>
 
 {{ form(form) }}
 
-    {% for task in tasks %}
-        <h2><b>Naziv:</b> {{ task.Naziv }}</h2>
-        <p><b>Kategorija:</b> {{ task.Kategorija }}</p>
-        <p><b>Vsebina:</b> {{ task.Vsebina }}</p>
-        <p><b>Datum:</b> {{ task.CreatedAt|date('d.m.Y') }}</p>
-        <p><b>Izpostavljeno?</b> {{ task.Izpostavljeno ? 'Da' : 'Ne' }}</p>
-    {% endfor %}
+{% for task in tasks %}
+    <h2><b>Name:</b> {{ task.name }}</h2>
+    <p><b>Category:</b> {{ task.category }}</p>
+    <p><b>Content:</b> {{ task.content }}</p>
+    <p><b>Summary:</b> {{ task.summary }}</p>
+    <p><b>Created At:</b> {{ task.CreatedAt|date('d.m.Y') }}</p>
+    <p><b>Featured</b> {{ task.featured ? 'Yes' : 'No' }}</p>
+    <hr>
+{% endfor %}
  
 {% endblock %}

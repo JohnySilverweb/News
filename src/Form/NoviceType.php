@@ -11,17 +11,26 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class NoviceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Naziv', TextType::class)
-            ->add('Kategorija', TextType::class)
-            ->add('Vsebina', TextareaType::class)
-            ->add('Datum_objave', DateType::class)
-            ->add('Izpostavljeno', CheckboxType::class, ['required' => false,]) 
+            ->add('name', TextType::class)
+            ->add('category', ChoiceType::class, [
+                'choices' => [
+                    'Policy' => 'Policy',
+                    'Sport' => 'Sport',
+                    'Culture' => 'Culture',
+                ]
+            ])
+            ->add('content', TextareaType::class)
+            ->add('summary', TextType::class)
+            ->add('validFrom', DateType::class)
+            ->add('validTill', DateType::class)
+            ->add('featured', CheckboxType::class, ['required' => false,]) 
             ->add('Dodaj', SubmitType::class);
     }
 

@@ -15,22 +15,32 @@ class Novice
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $Naziv = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $Kategorija = null;
+    private ?string $category = null;
+
+    #[ORM\Column(length: 30)]
+    private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $Vsebina = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $Datum_objave = null;
+    private ?string $content = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Izpostavljeno = null;
+    private ?bool $featured = null;
 
     #[ORM\Column(type: "datetime")]
     private ?\DateTime $createdAt = null;
+
+    #[ORM\Column(type: "datetime")]
+    private ?\DateTime $validFrom = null;
+
+    #[ORM\Column(type: "datetime")]
+    private ?\DateTime $validTill = null;
+
+/*     #[ORM\Column(type: "datetime")]
+    private ?\DateTime $updatedAt = null; */
+
 
         public function __construct()
     {
@@ -51,62 +61,86 @@ class Novice
         return $this->id;
     }
 
-    public function getNaziv(): ?string
+    public function getName(): ?string
     {
-        return $this->Naziv;
+        return $this->name;
     }
 
-    public function setNaziv(string $Naziv): static
+    public function setName(string $name): static
     {
-        $this->Naziv = $Naziv;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getKategorija(): ?string
+    public function getCategory(): ?string
     {
-        return $this->Kategorija;
+        return $this->category;
     }
 
-    public function setKategorija(string $Kategorija): static
+    public function setCategory(string $category): static
     {
-        $this->Kategorija = $Kategorija;
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getVsebina(): ?string
+    public function getSummary(): ?string
     {
-        return $this->Vsebina;
+        return $this->summary;
     }
 
-    public function setVsebina(?string $Vsebina): static
+    public function setSummary(string $summary): static
     {
-        $this->Vsebina = $Vsebina;
+        $this->summary = $summary;
+        
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getDatumObjave(): ?\DateTime
+    public function getValidFrom(): ?\DateTime
     {
-        return $this->Datum_objave;
+        return $this->validFrom;
     }
 
-    public function setDatumObjave(\DateTime $Datum_objave): static
+    public function setValidFrom(\DateTime $validFrom): static
     {
-        $this->Datum_objave = $Datum_objave;
+        $this->validFrom = $validFrom;
 
         return $this;
     }
 
-    public function isIzpostavljeno(): ?bool
+    public function getValidTill(): ?\DateTime
     {
-        return $this->Izpostavljeno;
+        return $this->validTill;
     }
 
-    public function setIzpostavljeno(?bool $Izpostavljeno): static
+    public function setValidTill(\DateTime $validTill): static
     {
-        $this->Izpostavljeno = $Izpostavljeno;
+        $this->validTill = $validTill;
+
+        return $this;
+    }
+
+    public function isFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(?bool $featured): static
+    {
+        $this->featured = $featured;
 
         return $this;
     }

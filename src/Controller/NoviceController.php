@@ -46,13 +46,46 @@ final class NoviceController extends AbstractController
         ]);
     }
 
-    #[Route('/novice/delete', name: 'novice_delete')]
-    public function delete(NoviceRepository $noviceRepository, EntityManagerInterface $em): Response
+    #[Route('/novice/table', name: 'novice_table')]
+    public function showtable(NoviceRepository $noviceRepository): Response
+    {
+        return $this->render('novice/table.html.twig', [
+            'novice' => $noviceRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/novice/cards', name: 'novice_cards')]
+    public function showcards(NoviceRepository $noviceRepository): Response
+    {
+        $novice = $noviceRepository->findAll();
+
+        return $this->render('novice/cards.html.twig', [
+            'novice' => $novice,
+        ]);
+    }
+
+    #[Route('/novice/delete_old', name: 'novice_delete_old')]
+    public function delete_old(NoviceRepository $noviceRepository, EntityManagerInterface $em): Response
     {
         $tasks = $noviceRepository->findAll();
         $tenMinutes = new \DateTime('-10 minutes');
         foreach($tasks as $novice) {
             if($novice->getCreatedAt() <= $tenMinutes) {
+                $em->remove($novice);
+            }
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('novice_data');
+    }
+
+    #[Route('/novice/delete_new', name: 'novice_delete_new')]
+    public function delete_new(NoviceRepository $noviceRepository, EntityManagerInterface $em): Response
+    {
+        $tasks = $noviceRepository->findAll();
+        $tenMinutes = new \DateTime('-10 minutes');
+        foreach($tasks as $novice) {
+            if($novice->getCreatedAt() >= $tenMinutes) {
                 $em->remove($novice);
             }
         }
@@ -78,6 +111,24 @@ final class NoviceController extends AbstractController
         return $this->render('/novice/search.html.twig', [
             'form' => $form->createView(),
             'tasks' => $tasks,
+        ]);
+    }
+
+    #[Route('/novice/edit/{id}', name: 'novice_edit')]
+    public function edit(Request $request, Novice $novice, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(NoviceType::class, $novice);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($novice);
+            $em->flush();
+
+            return $this->redirectToRoute('novice_table');
+        }
+        return $this->render('novice/edit.html.twig', [
+            'form' => $form->createView(),
+            'novice' => $novice,
         ]);
     }
  }

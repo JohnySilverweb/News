@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body_class %}table_page{% endblock %}
+{% block body %}
+
+<div class="title">
+    <h1>News Table</h1><h1>Latest news</h1>
+</div>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Featured</th>
+        <th>Category</th>
+        <th>Valid From</th>
+        <th>Valid Till</th>
+        <th></th>
+    </tr>
+    <tr>
+    {% for novice in novice %}
+        <td>{{ novice.name }}</td>    
+        <td>{{ novice.featured ? 'Yes' : 'No' }}</td>   
+        <td>{{ novice.category }}</td>   
+        <td>{{ novice.validFrom|date('d.m.Y') }}</td>   
+        <td>{{ novice.validTill|date('d.m.Y') }}</td>
+        <td>
+        <button><a href="{{ path('novice_edit', {'id': novice.id}) }}">Edit</a></button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+<div class="buttons">
+    <button><a href="{{ path('novice_cards') }}">Cards</a></button>
+    <button><a href="{{ path('novice_index') }}">Add news</a></button>
+    <button><a href="{{ path('novice_search') }}">Search news</a></button>
+</div>
+{% endblock %}
