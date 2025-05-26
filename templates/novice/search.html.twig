@@ -1,19 +1,43 @@
 {% extends 'base.html.twig' %}
+{% block body_class %}search_page{% endblock %}
 {% block body %}
-<a href="{{ path('novice_data') }}">Data</a> |
-<a href="{{ path('novice_index') }}">Form</a> |
-<a href="{{ path('novice_table') }}">News in Table</a>
 
+<h1>Find anything you need!</h1>
 {{ form(form) }}
-
-{% for task in tasks %}
-    <h2><b>Name:</b> {{ task.name }}</h2>
-    <p><b>Category:</b> {{ task.category }}</p>
-    <p><b>Content:</b> {{ task.content }}</p>
-    <p><b>Summary:</b> {{ task.summary }}</p>
-    <p><b>Created At:</b> {{ task.CreatedAt|date('d.m.Y') }}</p>
-    <p><b>Featured</b> {{ task.featured ? 'Yes' : 'No' }}</p>
+{% if searchQuery %}
+    {% if tasks is empty %}
+    <div class="search_error">
+        <p>No such news</p>
+        <p><b>Help words:</b> Policy, Sport, Culture, Metallica, Mongolia, Putin</p>
+    </div>
+    {% else %}
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Featured</th>
+            <th>Category</th>
+            <th>Valid From</th>
+            <th>Valid Till</th>
+        </tr>
+        <tr>
+        {% for task in tasks %}
+            <td><a href="{{ path('novice_id', {'id': task.id}) }}">{{ task.name }}</a></td>    
+            <td><a href="{{ path('novice_id', {'id': task.id}) }}">{{ task.featured ? 'Yes' : 'No' }}</a></td>   
+            <td><a href="{{ path('novice_id', {'id': task.id}) }}">{{ task.category }}</a></td>   
+            <td><a href="{{ path('novice_id', {'id': task.id}) }}">{{ task.validFrom|date('d.m.Y') }}</a></td>   
+            <td><a href="{{ path('novice_id', {'id': task.id}) }}">{{ task.validTill|date('d.m.Y') }}</a></td> 
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endif %}
+<div class="hr_search">
     <hr>
-{% endfor %}
- 
+</div>
+<div class="buttons">
+   <button><a href="{{ path('novice_table') }}">Tables</a></button>
+   <button><a href="{{ path('novice_index') }}">Add news</a></button>
+   <button><a href="{{ path('novice_cards') }}">Cards</a></button>
+</div>
+
 {% endblock %}

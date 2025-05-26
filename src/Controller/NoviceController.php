@@ -3,24 +3,20 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Controller\NoviceController;
-use App\Entity\Novice;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Novice;
 use App\Form\NoviceType;
-use App\Repository\NoviceRepository;
 use App\Form\SearchType;
+use App\Repository\NoviceRepository;
 
 
-final class NoviceController extends AbstractController
+class NoviceController extends AbstractController
  {
     #[Route('/novice/index', name: 'novice_index')] 
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
         $novice = new Novice();
         $form = $this->createForm(NoviceType::class, $novice);
@@ -29,20 +25,10 @@ final class NoviceController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $em->persist($novice);
             $em->flush();
-            return $this->redirectToRoute('novice_data');
+            return $this->redirectToRoute('novice_table');
         }
         return $this->render('novice/index.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/novice/data', name: 'novice_data')]
-    public function showdata(NoviceRepository $noviceRepository): Response
-    {
-        $tasks = $noviceRepository->findAll();
-
-        return $this->render('novice/data.html.twig', [
-            'novice' => $noviceRepository->findAll(),
         ]);
     }
 
@@ -57,60 +43,33 @@ final class NoviceController extends AbstractController
     #[Route('/novice/cards', name: 'novice_cards')]
     public function showcards(NoviceRepository $noviceRepository): Response
     {
-        $novice = $noviceRepository->findAll();
+        $novice = $noviceRepository->seePublished();
 
         return $this->render('novice/cards.html.twig', [
             'novice' => $novice,
         ]);
     }
 
-    #[Route('/novice/delete_old', name: 'novice_delete_old')]
-    public function delete_old(NoviceRepository $noviceRepository, EntityManagerInterface $em): Response
-    {
-        $tasks = $noviceRepository->findAll();
-        $tenMinutes = new \DateTime('-10 minutes');
-        foreach($tasks as $novice) {
-            if($novice->getCreatedAt() <= $tenMinutes) {
-                $em->remove($novice);
-            }
-        }
-        $em->flush();
-
-        return $this->redirectToRoute('novice_data');
-    }
-
-    #[Route('/novice/delete_new', name: 'novice_delete_new')]
-    public function delete_new(NoviceRepository $noviceRepository, EntityManagerInterface $em): Response
-    {
-        $tasks = $noviceRepository->findAll();
-        $tenMinutes = new \DateTime('-10 minutes');
-        foreach($tasks as $novice) {
-            if($novice->getCreatedAt() >= $tenMinutes) {
-                $em->remove($novice);
-            }
-        }
-        $em->flush();
-
-        return $this->redirectToRoute('novice_data');
-    }
-
-    #[Route('/novice/search', 'novice_search')]
+    #[Route('/', name: 'novice_search')]
     public function search(Request $request, NoviceRepository $noviceRepository): Response
     {
         $form = $this->createForm(SearchType::class, null, ['method' => 'GET', 'csrf_protection' => false]);
         $form->handleRequest($request);
 
         $tasks = [];
+        $searchQuery = '';
 
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $searchQuery = $data['search'] ?? '';
             $tasks = $noviceRepository->searchNews($searchQuery);
+
         }
 
         return $this->render('/novice/search.html.twig', [
             'form' => $form->createView(),
             'tasks' => $tasks,
+            'searchQuery' => $searchQuery,
         ]);
     }
 
@@ -121,6 +80,7 @@ final class NoviceController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $novice->setUpdatedAt(new \DateTime());
             $em->persist($novice);
             $em->flush();
 
@@ -128,7 +88,23 @@ final class NoviceController extends AbstractController
         }
         return $this->render('novice/edit.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/novice/delete/{id}', name: 'novice_delete')]
+    public function delete(Novice $novice, EntityManagerInterface $em): Response
+    {
+        $em->remove($novice);
+        $em->flush();
+        return $this->redirectToRoute('novice_table');
+    }
+
+    #[Route('/novice/{id}', name: 'novice_id')]
+    public function move(Novice $novice): Response
+    {        
+        return $this->render('novice/moreinfo.html.twig', [
             'novice' => $novice,
         ]);
     }
- }
+
+} 

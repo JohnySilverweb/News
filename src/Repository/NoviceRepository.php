@@ -26,7 +26,14 @@ class NoviceRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-
+    public function seePublished(): array 
+    {
+        return $this->createQueryBuilder('t')
+        ->where('t.published = :published')
+        ->setParameter('published', true)
+        ->getQuery()
+        ->getResult();
+    }
 
 
 

@@ -17,10 +17,9 @@ class SearchType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Search News',
-                    'class' => 'form-control'
                 ],
             ])
-            ->add('submit', SubmitType::class);
+            ->add('Search', SubmitType::class);
     }
 
 

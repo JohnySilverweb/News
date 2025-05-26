@@ -8,22 +8,24 @@
 </div>
 <div class="card_container">
 {% for novice in novice %}
-    <div class="card {{ novice.isFeatured() ? 'yes' }}">
+    <div class="card{% if novice.isFeatured() %} yes{% endif %}">
         {% if novice.category == 'Sport' %}
-           <img src="{{ asset('assets/img/sport.JPG') }}" alt="Sport" class="card_img">
+           <img src="{{ asset('/assets/img/sport.JPG') }}" alt="Sport" class="card_img">
            {% elseif novice.category == 'Culture' %}
-           <img src="{{ asset('assets/img/culture.webp') }}" alt="Culture" class="card_img">
+           <img src="{{ asset('/assets/img/culture.webp') }}" alt="Culture" class="card_img">
            {% elseif novice.category == 'Policy' %}
-           <img src="{{ asset('assets/img/policy.jpg') }}" alt="Police" class="card_img">
+           <img src="{{ asset('/assets/img/policy.jpg') }}" alt="Policy" class="card_img">
         {% endif %}
         <div class="card_content">
             <p class="date" >{{ novice.createdAt|date('d-m-Y') }}</p>
             <h2>{{ novice.name }}</h2>
-            <p>{{ novice.content }}</p>
-           {#  <p class="category">{{ novice.category }}</p> #}
+            {# <p>{{ novice.content }}</p> #}
+            <p>{{ novice.summary }}</p>
+            <p>{{ novice.category }}</p> 
+            <hr>
         </div>
         <div class="card_buttons">
-            <a href="{{ path('novice_data') }}" class="btn_left">See more</a>
+            <a href="{{ path('novice_id', {'id': novice.id}) }}" class="btn_left">See more</a>
             <a href="{{ path('novice_edit', {'id': novice.id}) }}" class="btn_right">Edit</a>
         </div>
     </div>

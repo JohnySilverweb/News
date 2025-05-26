@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class NoviceType extends AbstractType
 {
@@ -26,12 +27,17 @@ class NoviceType extends AbstractType
                     'Culture' => 'Culture',
                 ]
             ])
-            ->add('content', TextareaType::class)
             ->add('summary', TextType::class)
+            ->add('content', TextareaType::class)
             ->add('validFrom', DateType::class)
             ->add('validTill', DateType::class)
             ->add('featured', CheckboxType::class, ['required' => false,]) 
-            ->add('Dodaj', SubmitType::class);
+            ->add('published', CheckboxType::class, ['required' => false,])
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

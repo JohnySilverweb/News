@@ -14,15 +14,19 @@
         <th>Valid Till</th>
         <th></th>
     </tr>
-    <tr>
+    
     {% for novice in novice %}
-        <td>{{ novice.name }}</td>    
+    <tr {% if not novice.isPublished() %} style="background-color: rgba(133, 99, 7, 0.6)" {% endif %}> 
+        <td >{{ novice.name }}</td>    
         <td>{{ novice.featured ? 'Yes' : 'No' }}</td>   
         <td>{{ novice.category }}</td>   
         <td>{{ novice.validFrom|date('d.m.Y') }}</td>   
         <td>{{ novice.validTill|date('d.m.Y') }}</td>
         <td>
-        <button><a href="{{ path('novice_edit', {'id': novice.id}) }}">Edit</a></button>
+            <button><a href="{{ path('novice_edit', {'id': novice.id}) }}">Edit</a></button>
+        </td>
+        <td>
+            <button><a href="{{ path('novice_delete', {'id': novice.id}) }}">Delete</a></button>
         </td>
     </tr>
     {% endfor %}
