@@ -16,7 +16,8 @@ class NoviceRepository extends ServiceEntityRepository
         parent::__construct($registry, Novice::class);
     }
 
-    public function searchNews(?string $search): array {
+    public function searchNews(?string $search): array 
+    {
         return $this->createQueryBuilder('t')
         ->where('LOWER(t.name) LIKE LOWER(:search)')
         ->orWhere('LOWER(t.category) LIKE LOWER(:search)')
@@ -30,12 +31,16 @@ class NoviceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('t')
         ->where('t.published = :published')
+        ->andWhere('t.validFrom <= :today')
+        ->andWhere('t.validTill >= :today')
+        ->setParameter('today', new \DateTime())
         ->setParameter('published', true)
         ->getQuery()
         ->getResult();
     }
 
-    public function duplicateNews($id) {
+    public function duplicateNews($id) 
+    {
         $news = $this->find($id);
 
         $newsCopy = new Novice();
