@@ -35,7 +35,26 @@ class NoviceRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function duplicateNews($id) {
+        $news = $this->find($id);
 
+        $newsCopy = new Novice();
+        $newsCopy->setName($news->getName());
+        $newsCopy->setCategory($news->getCategory());
+        $newsCopy->setSummary($news->getSummary());
+        $newsCopy->setContent($news->getContent());
+        $newsCopy->setValidFrom(new \DateTime());
+        $newsCopy->setValidTill(new \DateTime());
+        $newsCopy->setCreatedAt(new \DateTime());
+        $newsCopy->setUpdatedAt(new \DateTime());
+        $newsCopy->setFeatured($news->IsFeatured());
+        $newsCopy->setPublished($news->IsPublished());
+
+        $this->getEntityManager()->persist($newsCopy);
+        $this->getEntityManager()->flush();
+
+        return $newsCopy->getId();
+    }
 
 
 

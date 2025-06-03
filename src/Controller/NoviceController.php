@@ -107,4 +107,11 @@ class NoviceController extends AbstractController
         ]);
     }
 
-} 
+    #[Route('/novice/duplicate/{id}', name: 'novice_duplicate')]
+    public function duplicate(NoviceRepository $noviceRepository, int $id): Response
+    {
+        $noviceRepository->duplicateNews($id);
+        return $this->redirectToRoute('novice_table');
+    }
+
+}  
