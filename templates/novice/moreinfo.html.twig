@@ -9,19 +9,7 @@
     <div class="moreinfo2">
         <h2>{{novice.summary}}</h2>
         <p>{{novice.content}}</p>
-        {% if novice.name == 'Football' %}
-            <img src="{{ asset('/assets/img/football.webp') }}" alt="football">
-        {% elseif novice.name == 'Metallica' %}
-            <img src="{{ asset('/assets/img/metallica.jpeg') }}" alt="metallica">
-        {% elseif novice.name == 'Putin Signed New Law' %}
-            <img src="{{ asset('/assets/img/putin.jpeg') }}" alt="putin">
-        {% elseif novice.name == 'Ancient Roman Art' %}
-            <img src="{{ asset('/assets/img/roman_art.jpg') }}" alt="ancient roman art">
-        {% elseif novice.name == 'Mongol Empire' %}
-            <img src="{{ asset('/assets/img/chingiz_khan.webp') }}" alt="chingiz khan"
-        {% else %}
-            <p>No photo</p>
-        {% endif %}
+        <img src="{{ asset('uploads/images/' ~ novice.image) }}" alt="image">
         <p><b>{{ novice.createdAt|date('d-m-Y') }}</b></p>
         <button><a href="{{ path('novice_cards') }}">Go back</a></button>
     </div>

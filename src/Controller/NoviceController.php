@@ -11,18 +11,25 @@ use App\Entity\Novice;
 use App\Form\NoviceType;
 use App\Form\SearchType;
 use App\Repository\NoviceRepository;
-
+use App\Service\FileUploader;
 
 class NoviceController extends AbstractController
  {
     #[Route('/novice/index', name: 'novice_index')] 
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $novice = new Novice();
         $form = $this->createForm(NoviceType::class, $novice);
         $form->handleRequest($request);
     
         if($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $novice->setImage($imageFileName);
+            }
+
             $em->persist($novice);
             $em->flush();
             return $this->redirectToRoute('novice_table');
@@ -74,12 +81,19 @@ class NoviceController extends AbstractController
     }
 
     #[Route('/novice/edit/{id}', name: 'novice_edit')]
-    public function edit(Request $request, Novice $novice, EntityManagerInterface $em): Response
+    public function edit(Request $request, Novice $novice, EntityManagerInterface $em, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(NoviceType::class, $novice);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $novice->setImage($imageFileName);
+            }
+
             $novice->setUpdatedAt(new \DateTime());
             $em->persist($novice);
             $em->flush();

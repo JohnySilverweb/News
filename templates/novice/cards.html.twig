@@ -19,10 +19,10 @@
         <div class="card_content">
             <p class="date" >{{ novice.createdAt|date('d-m-Y') }}</p>
             <h2>{{ novice.name }}</h2>
-            {# <p>{{ novice.content }}</p> #}
             <p>{{ novice.summary }}</p>
             <p>{{ novice.category }}</p> 
             <hr>
+            <p><b>{{ novice.validFrom|date('d-m-Y') }} - {{ novice.validTill|date('d-m-Y') }}</b></p>
         </div>
         <div class="card_buttons">
             <a href="{{ path('novice_id', {'id': novice.id}) }}" class="btn_left">See more</a>

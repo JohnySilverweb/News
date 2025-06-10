@@ -3,9 +3,11 @@ body {
     text-align: center;
 }
 
-
-/* FOR CARDS.HTML.TWIG */
-body.cards_page {
+body.cards_page,
+body.table_page,
+body.form_page,
+body.search_page,
+body.edit_page {
     background-image:
         linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
         url('/assets/img/newspaper.jpg');
@@ -15,6 +17,7 @@ body.cards_page {
     background-attachment: fixed;
 }
 
+/* FOR CARDS.HTML.TWIG */
 .title {
     display: flex;
     align-items: center;
@@ -36,12 +39,12 @@ body.cards_page {
 .card {
     display: flex;
     flex-direction: column;
-    padding: 0 !important;
+    padding: 0;
     margin: 0;
     flex-basis: 350px;
     height: 550px;
-    box-shadow: 4px 4px 6px rgba(0,0,0,0.1), 0 6px 10px rgba(0, 0, 0, 0.19) !important;
-    border-radius: 15px !important;
+    box-shadow: 4px 4px 6px rgba(0,0,0,0.1), 0 6px 10px rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
     background-color: white;
 }
 
@@ -59,7 +62,8 @@ body.cards_page {
     margin-top: auto;
 }
 
-.btn_left {
+.btn_left, 
+.btn_right {
     width: 49.7%;
     height: 50px;
     background-color: red;
@@ -74,17 +78,8 @@ body.cards_page {
 }
 
 .btn_right {
-    width: 49.7%;
-    height: 50px;
-    background-color: red;
     border-bottom-right-radius: 15px;
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 900;
-    color: white;
-    text-decoration: none;
+    border-bottom-left-radius: 0;
 }
 
 .card_content p {
@@ -115,7 +110,7 @@ body.cards_page {
 }
 
 .card.yes {
-    box-shadow: 0 0 15px 5px gold !important;
+    box-shadow: 0 0 15px 5px gold;
     transition: box-shadow 0.4s ease;
 }
 
@@ -129,19 +124,26 @@ hr {
     margin: 50px 100px;
 }
 
-.buttons button {
-    background-color: white;
-    width: 120px;
-    height: 60px;
-    border: 2.5px solid black;
-    transition-duration: 0.5s;
-    margin: 0px 20px 20px 20px;
-    a {
-        text-decoration: none;
-        font-size: 18px;
-        color: black;
-        font-weight: 500;
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        background-color: white;
+        width: 120px;
+        height: 60px;
+        border: 2.5px solid black;
         transition-duration: 0.5s;
+        margin: 0px 20px 20px 20px;
+    
+        a {
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            font-weight: 500;
+            transition-duration: 0.5s;
+        }
     }
 }
 
@@ -155,14 +157,7 @@ hr {
 
 /* FOR TABLE.HTML.TWIG */
 body.table_page {
-    background-image:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('/assets/img/newspaper.jpg');
     color: white;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 
@@ -214,39 +209,8 @@ table button {
     }
 }
 
-.buttons button {
-    background-color: white;
-    width: 120px;
-    height: 60px;
-    border: 2.5px solid black;
-    transition-duration: 0.5s;
-    margin: 0px 20px 20px 20px;
-    a {
-        text-decoration: none;
-        font-size: 18px;
-        color: black;
-        font-weight: 500;
-        transition-duration: 0.5s;
-    }
-}
-
-.buttons button:hover {
-    background-color: black;
-    a {
-        color: white;
-    }
-}
 
 /* FOR INDEX.HTML.TWIG */
-body.form_page {
-    background-image:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('/assets/img/newspaper.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
 
 .form_title {
     text-align: center;
@@ -331,14 +295,7 @@ div button {
 
 /* FOR SEARCH.HTML.TWIG */
 body.search_page {
-    background-image:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('/assets/img/newspaper.jpg');
     color: white;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 #app_search div button {
@@ -367,14 +324,7 @@ h1 {
 
 /* FOR EDIT.HTML.TWIG */
 body.edit_page {
-    background-image:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('/assets/img/newspaper.jpg');
     color: white;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 /* FOR MOREINFO PAGES */
@@ -398,7 +348,7 @@ body.moreinfo_page {
     text-align: left;
     h1 {
         text-shadow: none;
-        font-size: 70px !important;
+        font-size: 70px;
     }
 }
 
