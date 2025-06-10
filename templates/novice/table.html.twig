@@ -13,6 +13,7 @@
         <th>Valid From</th>
         <th>Valid Till</th>
         <th></th>
+        <th></th>
     </tr>
     
     {% for novice in novice %}
@@ -27,6 +28,9 @@
         </td>
         <td>
             <button><a href="{{ path('novice_delete', {'id': novice.id}) }}">Delete</a></button>
+        </td>
+        <td>
+            <button><a href="{{ path('novice_duplicate', {'id': novice.id}) }}">Duplicate</a></button>
         </td>
     </tr>
     {% endfor %}
