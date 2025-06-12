@@ -9,13 +9,7 @@
 <div class="card_container">
 {% for novice in novice %}
     <div class="card{% if novice.isFeatured() %} yes{% endif %}">
-        {% if novice.category == 'Sport' %}
-           <img src="{{ asset('/assets/img/sport.JPG') }}" alt="Sport" class="card_img">
-           {% elseif novice.category == 'Culture' %}
-           <img src="{{ asset('/assets/img/culture.webp') }}" alt="Culture" class="card_img">
-           {% elseif novice.category == 'Policy' %}
-           <img src="{{ asset('/assets/img/policy.jpg') }}" alt="Policy" class="card_img">
-        {% endif %}
+        <img src="{{ asset('uploads/images/' ~ novice.image) }}" alt="image" class="card_img">
         <div class="card_content">
             <p class="date" >{{ novice.createdAt|date('d-m-Y') }}</p>
             <h2>{{ novice.name }}</h2>

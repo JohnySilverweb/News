@@ -41,7 +41,7 @@ body.edit_page {
     flex-direction: column;
     padding: 0;
     margin: 0;
-    flex-basis: 350px;
+    flex-basis: 400px;
     height: 550px;
     box-shadow: 4px 4px 6px rgba(0,0,0,0.1), 0 6px 10px rgba(0, 0, 0, 0.19);
     border-radius: 15px;
@@ -91,7 +91,7 @@ body.edit_page {
 }
 
 .card_content hr {
-    width: 35%;
+    width: 45%;
     margin: 10px 110px;
 }
 
